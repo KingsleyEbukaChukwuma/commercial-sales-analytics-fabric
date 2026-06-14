@@ -1,0 +1,55 @@
+table dim_territory
+	lineageTag: 1a4aca6a-ea2d-4624-aa8e-1eb259a373d7
+
+	column territory_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 5214e750-df60-4eba-8198-e29afd9bc133
+		summarizeBy: none
+		sourceColumn: territory_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		lineageTag: 97409386-3233-44eb-b1dd-2b9acfa3d64d
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column voivodeship
+		dataType: string
+		lineageTag: 85afc022-cd88-4709-9a90-30315adeda45
+		summarizeBy: none
+		sourceColumn: voivodeship
+
+		annotation SummarizationSetBy = Automatic
+
+	column city_district
+		dataType: string
+		lineageTag: bee592de-0af0-476e-9b37-422535f734f3
+		summarizeBy: none
+		sourceColumn: city_district
+
+		annotation SummarizationSetBy = Automatic
+
+	column business_region
+		dataType: string
+		lineageTag: b466ea7e-191e-4781-8aec-96171e775b4e
+		summarizeBy: none
+		sourceColumn: business_region
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_territory = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("oisvvomosz3elmz2vuqfv426li-r63vsebvac3eveb6no72kwmy5a.datawarehouse.fabric.microsoft.com", "lh_oralcare_analytics"),
+				    dbo_dim_territory = Source{[Schema="dbo",Item="dim_territory"]}[Data]
+				in
+				    dbo_dim_territory
+
+	annotation PBI_ResultType = Table
+

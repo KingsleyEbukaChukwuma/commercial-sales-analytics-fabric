@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Oralcare analytics 2"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a367f488-d064-b1ea-4092-dfb95566836f"
+  }
+}

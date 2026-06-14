@@ -1,0 +1,68 @@
+relationship AutoDetected_68ca8d2d-a506-45bc-b6b4-2e612e89cd7c
+	fromColumn: fact_sales.customer_key
+	toColumn: dim_customer.customer_key
+
+relationship AutoDetected_eb4e6ede-18bf-4db7-8d36-54d755540062
+	fromColumn: fact_prospective_orders.customer_key
+	toColumn: dim_customer.customer_key
+
+relationship AutoDetected_ab89c092-a19f-4a04-99f2-de72f9b183e3
+	fromColumn: fact_sales.territory_key
+	toColumn: dim_territory.territory_key
+
+relationship AutoDetected_ac85b620-4aae-4f33-8a59-65e2b3d8b90a
+	fromColumn: fact_prospective_orders.territory_key
+	toColumn: dim_territory.territory_key
+
+relationship AutoDetected_4de7b758-ff51-4ce0-9eec-0495c903bbf6
+	fromColumn: fact_sales.date_key
+	toColumn: dim_date.date_key
+
+relationship AutoDetected_3aefb289-799e-41fb-bd3f-737587b12338
+	fromColumn: fact_prospective_orders.date_key
+	toColumn: dim_date.date_key
+
+relationship AutoDetected_efb4c4c8-2d44-4a6f-9a7a-874108caecc5
+	fromColumn: fact_sales.employee_key
+	toColumn: dim_employee.employee_key
+
+relationship AutoDetected_689afde3-6d17-4bb9-9a6d-eb5dc276849c
+	fromColumn: fact_prospective_orders.employee_key
+	toColumn: dim_employee.employee_key
+
+relationship AutoDetected_37bcd2c7-4c2b-4919-9a4c-1486f4209d98
+	fromColumn: fact_sales.product_key
+	toColumn: dim_product.product_key
+
+relationship AutoDetected_992122c7-64be-4159-9852-e3730f5dd369
+	fromColumn: fact_prospective_orders.product_key
+	toColumn: dim_product.product_key
+
+relationship AutoDetected_afbc0512-1fba-4bd7-a3cf-2a5069ba938d
+	fromColumn: fact_daily_sales_targets.territory_key
+	toColumn: dim_territory.territory_key
+
+relationship AutoDetected_8868b417-e6e6-49e3-af78-65b10f17abdf
+	fromColumn: fact_daily_sales_targets.employee_key
+	toColumn: dim_employee.employee_key
+
+relationship 095fa9e1-25e0-4eab-b518-1f361782227a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_customer.onboarding_date
+	toColumn: LocalDateTable_c0aea8ea-3ced-4858-9411-96860c6e5488.Date
+
+relationship 624aa14d-3188-8184-36c6-3f7e2502d219
+	isActive: false
+	fromColumn: fact_prospective_orders.expected_close_date_key
+	toColumn: dim_date.date_key
+
+relationship dc28a611-62cb-85cd-ebd8-0b2f50e6ac40
+	fromColumn: fact_daily_sales_targets.date_key
+	toColumn: dim_date.date_key
+
+relationship AutoDetected_3441debd-25fa-4277-9d0b-33f4a20fb06a
+	crossFilteringBehavior: bothDirections
+	securityFilteringBehavior: bothDirections
+	fromColumn: bridge_employee_access.employee_key
+	toColumn: dim_employee.employee_key
+

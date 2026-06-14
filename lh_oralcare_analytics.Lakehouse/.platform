@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Lakehouse",
+    "displayName": "lh_oralcare_analytics"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "56bd5689-84c7-aa8f-4dba-e62b5337b1ab"
+  }
+}

@@ -1,0 +1,9 @@
+role Untitled
+	modelPermission: read
+
+	tablePermission bridge_employee_access =
+			LOWER(TRIM(bridge_employee_access[email]))
+			    = LOWER(TRIM(USERPRINCIPALNAME()))
+
+	annotation PBI_Id = bc888666dc9e48ac884acacce9946ba2
+

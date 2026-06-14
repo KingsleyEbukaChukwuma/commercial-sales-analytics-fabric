@@ -1,0 +1,49 @@
+expression commercial_manager_access =
+		let
+		    Source = dim_employee,
+		    #"Merged Queries" = Table.NestedJoin(Source, {"commercial_manager_key"}, dim_employee, {"employee_key"}, "dim_employee", JoinKind.Inner),
+		    #"Expanded dim_employee" = Table.ExpandTableColumn(#"Merged Queries", "dim_employee", {"email"}, {"email.1"}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Expanded dim_employee",{"employee_name", "role", "email", "manager_employee_key", "manager_employee_name", "commercial_manager_key", "commercial_manager_name", "regional_manager_key", "regional_manager_name", "sales_rep_key", "sales_rep_name", "territory_key", "business_region", "employee_status", "employee_id"}),
+		    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"email.1", "email"}}),
+		    #"Trimmed Text" = Table.TransformColumns(#"Renamed Columns",{{"email", Text.Trim, type text}}),
+		    #"Lowercased Text" = Table.TransformColumns(#"Trimmed Text",{{"email", Text.Lower, type text}})
+		in
+		    #"Lowercased Text"
+	lineageTag: 3f4f8ec3-3b43-4f9d-87d2-c17124d88b10
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression regional_manager_access =
+		let
+		    Source = dim_employee,
+		    #"Merged Queries" = Table.NestedJoin(Source, {"regional_manager_key"}, dim_employee, {"employee_key"}, "dim_employee", JoinKind.Inner),
+		    #"Expanded dim_employee" = Table.ExpandTableColumn(#"Merged Queries", "dim_employee", {"email"}, {"email.1"}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Expanded dim_employee",{"employee_id", "employee_name", "role", "email", "manager_employee_key", "manager_employee_name", "commercial_manager_key", "commercial_manager_name", "regional_manager_key", "regional_manager_name", "sales_rep_key", "sales_rep_name", "territory_key", "business_region", "employee_status"}),
+		    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"email.1", "email"}}),
+		    #"Trimmed Text" = Table.TransformColumns(#"Renamed Columns",{{"email", Text.Trim, type text}}),
+		    #"Lowercased Text" = Table.TransformColumns(#"Trimmed Text",{{"email", Text.Lower, type text}})
+		in
+		    #"Lowercased Text"
+	lineageTag: e77e2726-42e6-46a9-b85d-4a3eec489cd0
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression self_access =
+		let
+		    Source = dim_employee,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"employee_key", "employee_name", "role", "email"}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Removed Other Columns",{"employee_name", "role"}),
+		    #"Trimmed Text" = Table.TransformColumns(#"Removed Columns",{{"email", Text.Trim, type text}}),
+		    #"Lowercased Text" = Table.TransformColumns(#"Trimmed Text",{{"email", Text.Lower, type text}})
+		in
+		    #"Lowercased Text"
+	lineageTag: c3123598-fdf8-4cc1-9e6f-21f7b51ad200
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

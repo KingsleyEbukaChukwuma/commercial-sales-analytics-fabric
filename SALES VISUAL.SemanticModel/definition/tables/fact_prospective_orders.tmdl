@@ -1,0 +1,117 @@
+table fact_prospective_orders
+	lineageTag: bc8073d2-3391-435d-8a36-ad2ef2828ae8
+
+	column prospective_order_line_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 5bd97651-b252-44b6-ab1a-a321e2fb8114
+		summarizeBy: sum
+		sourceColumn: prospective_order_line_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 85912b5c-bd57-4cb2-9790-ac3d071f95c6
+		summarizeBy: sum
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 0c99e943-1963-4dc4-a456-8403190dee56
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 583b5fbd-b10c-4b11-9f46-6e4429782fed
+		summarizeBy: none
+		sourceColumn: customer_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_key
+		dataType: int64
+		formatString: 0
+		lineageTag: c4912c4d-ed7a-4400-ba37-5dbf5db48528
+		summarizeBy: none
+		sourceColumn: product_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_key
+		dataType: int64
+		formatString: 0
+		lineageTag: ddc4216c-56eb-4957-b693-52c6be2ef190
+		summarizeBy: none
+		sourceColumn: employee_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column territory_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a361dee-a39d-4c58-a043-9bece0a15122
+		summarizeBy: none
+		sourceColumn: territory_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column expected_quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 07a6c4bb-3a9d-4df5-9af6-96d1ac594f0e
+		summarizeBy: sum
+		sourceColumn: expected_quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column expected_amount_pln
+		dataType: double
+		lineageTag: a53d739f-c536-4298-bc06-482c97d9cb40
+		summarizeBy: sum
+		sourceColumn: expected_amount_pln
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column probability
+		dataType: double
+		lineageTag: 3eedbd73-c99d-43ad-b418-b6ff82c22e56
+		summarizeBy: sum
+		sourceColumn: probability
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column expected_close_date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 2ee3d116-8b15-4e3a-87c3-48afb8c5f549
+		summarizeBy: sum
+		sourceColumn: expected_close_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_prospective_orders = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("oisvvomosz3elmz2vuqfv426li-r63vsebvac3eveb6no72kwmy5a.datawarehouse.fabric.microsoft.com", "lh_oralcare_analytics"),
+				    dbo_fact_prospective_orders = Source{[Schema="dbo",Item="fact_prospective_orders"]}[Data]
+				in
+				    dbo_fact_prospective_orders
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

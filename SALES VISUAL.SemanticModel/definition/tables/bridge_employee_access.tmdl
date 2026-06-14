@@ -1,0 +1,34 @@
+table bridge_employee_access
+	lineageTag: 231b27e5-8418-4cb4-b1c0-d6a9684b6731
+
+	column employee_key
+		dataType: int64
+		formatString: 0
+		lineageTag: bc99de14-2428-49fd-a278-ee4b19f00337
+		summarizeBy: none
+		sourceColumn: employee_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: 9bf2159f-91f2-4d28-9b8f-7e42efe0285c
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	partition bridge_employee_access = m
+		mode: import
+		source =
+				let
+				    Source = Table.Combine({self_access, regional_manager_access, commercial_manager_access}),
+				    #"Removed Duplicates" = Table.Distinct(Source),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates")
+				in
+				    #"Removed Duplicates1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

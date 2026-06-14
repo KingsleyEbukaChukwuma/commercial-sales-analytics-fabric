@@ -1,0 +1,113 @@
+table dim_customer
+	lineageTag: 0661884a-fc7a-467c-9594-a75b53921670
+
+	column customer_id
+		dataType: string
+		lineageTag: 71da45fe-3b48-4609-84fc-f6a7096d6a6c
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_key
+		dataType: int64
+		formatString: 0
+		lineageTag: cd27e1cd-0ec0-4c02-ac49-efacb6ff024a
+		summarizeBy: none
+		sourceColumn: customer_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_name
+		dataType: string
+		lineageTag: d9117516-67a7-4560-b8b4-3ee391db7f71
+		summarizeBy: none
+		sourceColumn: customer_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_type
+		dataType: string
+		lineageTag: 4e4cfe62-0733-4dfc-85c3-47d120a34524
+		summarizeBy: none
+		sourceColumn: customer_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column channel
+		dataType: string
+		lineageTag: 56005506-f7c6-4150-889c-b69c33835615
+		summarizeBy: none
+		sourceColumn: channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: 3f9c7c03-4567-43a4-87ef-0a4f4c3407ab
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column territory_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 2457fc3e-c24e-47b9-be88-ff1b60a6be6d
+		summarizeBy: sum
+		sourceColumn: territory_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column assigned_employee_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c0c0608-4f74-4308-bc68-9f8bf1bd7d62
+		summarizeBy: sum
+		sourceColumn: assigned_employee_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_tier
+		dataType: string
+		lineageTag: 534e5c71-6e56-47e7-af8a-312a953963ec
+		summarizeBy: none
+		sourceColumn: customer_tier
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_status
+		dataType: string
+		lineageTag: 2eda66c0-e5e1-4279-a486-a1286516cd9d
+		summarizeBy: none
+		sourceColumn: customer_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column onboarding_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8021733c-a72f-44b7-8667-937294ab95ba
+		summarizeBy: none
+		sourceColumn: onboarding_date
+
+		variation Variation
+			isDefault
+			relationship: 095fa9e1-25e0-4eab-b518-1f361782227a
+			defaultHierarchy: LocalDateTable_c0aea8ea-3ced-4858-9411-96860c6e5488.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition dim_customer = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("oisvvomosz3elmz2vuqfv426li-r63vsebvac3eveb6no72kwmy5a.datawarehouse.fabric.microsoft.com", "lh_oralcare_analytics"),
+				    dbo_dim_customer = Source{[Schema="dbo",Item="dim_customer"]}[Data]
+				in
+				    dbo_dim_customer
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,188 @@
+table dim_date
+	lineageTag: 1260a2ee-98a7-4bc3-b906-e58ff6fcd606
+	dataCategory: Time
+
+	column full_date
+		dataType: dateTime
+		isKey
+		formatString: Long Date
+		lineageTag: 6e759966-005f-4181-8db6-c9bab515a13e
+		summarizeBy: none
+		sourceColumn: full_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: e9fe4f9f-3ded-46b7-a87a-986937d5486f
+		summarizeBy: none
+		sourceColumn: date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: 4dfacc1a-29aa-48ba-b6dc-2fe3c3444deb
+		summarizeBy: sum
+		sourceColumn: year
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: bee4e33f-1417-43be-95c4-6c0cfdfc8f88
+		summarizeBy: sum
+		sourceColumn: quarter
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: 17ae5231-42de-4ebd-a55b-8d2f819fe3bd
+		summarizeBy: sum
+		sourceColumn: month
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_name
+		dataType: string
+		lineageTag: 7f4e3f73-76f2-498a-9467-4dff1cc45acb
+		summarizeBy: none
+		sourceColumn: month_name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column day
+		dataType: int64
+		formatString: 0
+		lineageTag: 55f5e4d5-85f8-4493-8ee1-524e30a86a7b
+		summarizeBy: sum
+		sourceColumn: day
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_name
+		dataType: string
+		lineageTag: 9731d046-1466-4f10-916c-254f72d89a82
+		summarizeBy: none
+		sourceColumn: day_name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_number
+		dataType: int64
+		formatString: 0
+		lineageTag: 353ad94e-ab2b-434b-8abe-717ba67595c4
+		summarizeBy: sum
+		sourceColumn: month_number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_month
+		dataType: string
+		lineageTag: 36c84948-5bf0-4a15-be18-68ea69e875ff
+		summarizeBy: none
+		sourceColumn: year_month
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_key
+		dataType: int64
+		formatString: 0
+		lineageTag: b47d512a-fe82-4723-b753-ba19c79576ee
+		summarizeBy: sum
+		sourceColumn: month_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Year' = FORMAT('dim_date'[full_date], "MMM yyyy")
+		lineageTag: a1767a5c-34e2-496a-864f-d83d1f818612
+		summarizeBy: none
+		sortByColumn: 'Month Year Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Year Sort' =
+			
+			YEAR('dim_date'[full_date]) * 100
+			    + MONTH('dim_date'[full_date])
+		formatString: 0
+		lineageTag: a7f47358-676f-42af-96e5-3d4407aadd59
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy date_hierarchy
+		lineageTag: 3f2ba41e-95dc-4299-8c70-c6edbd854632
+
+		level year
+			lineageTag: d7ca4c71-abb9-4b14-a603-c8a851f21f1a
+			column: year
+
+		level quarter
+			lineageTag: da685f8d-3a2e-4b92-82f8-b840235ac7fc
+			column: quarter
+
+		level month
+			lineageTag: e5850de1-132e-4e04-a714-83ab3c2a4c19
+			column: month
+
+		level full_date
+			lineageTag: 01fa2307-7130-46f9-9952-2b80fbc3d840
+			column: full_date
+
+		level month_name
+			lineageTag: 19ed5e5f-21a9-4698-8a0f-d4e614479681
+			column: month_name
+
+		level 'Month Year'
+			lineageTag: 804a9bc4-463c-4c22-9596-b9815d4634f4
+			column: 'Month Year'
+
+		changedProperty = IsHidden
+
+	partition dim_date = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("oisvvomosz3elmz2vuqfv426li-r63vsebvac3eveb6no72kwmy5a.datawarehouse.fabric.microsoft.com", "lh_oralcare_analytics"),
+				    dbo_dim_date = Source{[Schema="dbo",Item="dim_date"]}[Data]
+				in
+				    dbo_dim_date
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
