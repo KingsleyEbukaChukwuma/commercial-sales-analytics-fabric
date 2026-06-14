@@ -1,4 +1,4 @@
-role Untitled
+role CommercialHierarchyRLS
 	modelPermission: read
 
 	tablePermission bridge_employee_access =

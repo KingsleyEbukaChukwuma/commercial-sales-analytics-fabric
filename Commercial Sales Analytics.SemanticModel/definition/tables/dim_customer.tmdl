@@ -91,11 +91,6 @@ table dim_customer
 		summarizeBy: none
 		sourceColumn: onboarding_date
 
-		variation Variation
-			isDefault
-			relationship: 095fa9e1-25e0-4eab-b518-1f361782227a
-			defaultHierarchy: LocalDateTable_c0aea8ea-3ced-4858-9411-96860c6e5488.'Date Hierarchy'
-
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
