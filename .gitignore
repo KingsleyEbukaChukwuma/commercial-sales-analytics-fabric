@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Secrets and local configuration
+*.pem
+*.key
+*.pfx
+*.cer
+secrets.*
+config.local.*
+.env.*
+
+# Azure / Fabric local artefacts
+.azure/
+.fabric/
+*.publishsettings
+
+# Data files
+*.csv
+*.parquet
+*.delta
+*.xlsx
+*.jsonl
+data/
+output/
+tmp/
+
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
