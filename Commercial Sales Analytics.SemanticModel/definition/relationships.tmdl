@@ -46,11 +46,6 @@ relationship AutoDetected_8868b417-e6e6-49e3-af78-65b10f17abdf
 	fromColumn: fact_daily_sales_targets.employee_key
 	toColumn: dim_employee.employee_key
 
-relationship 095fa9e1-25e0-4eab-b518-1f361782227a
-	joinOnDateBehavior: datePartOnly
-	fromColumn: dim_customer.onboarding_date
-	toColumn: LocalDateTable_c0aea8ea-3ced-4858-9411-96860c6e5488.Date
-
 relationship 624aa14d-3188-8184-36c6-3f7e2502d219
 	isActive: false
 	fromColumn: fact_prospective_orders.expected_close_date_key

@@ -3,7 +3,7 @@
   "version": "4.0",
   "datasetReference": {
     "byPath": {
-      "path": "../SALES VISUAL.SemanticModel"
+      "path": "../Commercial Sales Analytics.SemanticModel"
     }
   }
 }
