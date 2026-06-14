@@ -33,15 +33,15 @@ This project creates a single analytical platform that answers those questions t
 
 ```mermaid
 flowchart LR
-    A\[Python <br/>Synthetic Data Generation] --> B\[Azure Data Lake Storage Gen2]
-    B --> C\[Fabric Data Factory Pipeline]
-    C --> D\[Bronze Lakehouse<br/>Raw Delta Tables]
-    D --> E\[Fabric Notebooks and PySpark]
-    E --> F\[Silver Lakehouse<br/>Cleaned and Conformed Delta Tables]
-    F --> G\[Gold Lakehouse<br/>Fact and Dimension Tables]
-    G --> H\[Power BI Semantic Model]
-    H --> I\[Power BI App]
-    J\[Employee Security Hierarchy] --> H
+    A\\\[Python <br/>Synthetic Data Generation] --> B\\\[Azure Data Lake Storage Gen2]
+    B --> C\\\[Fabric Data Factory Pipeline]
+    C --> D\\\[Bronze Lakehouse<br/>Raw Delta Tables]
+    D --> E\\\[Fabric Notebooks and PySpark]
+    E --> F\\\[Silver Lakehouse<br/>Cleaned and Conformed Delta Tables]
+    F --> G\\\[Gold Lakehouse<br/>Fact and Dimension Tables]
+    G --> H\\\[Power BI Semantic Model]
+    H --> I\\\[Power BI App]
+    J\\\[Employee Security Hierarchy] --> H
 ```
 
 ### Data flow
@@ -112,17 +112,17 @@ The Gold layer contains business-ready fact and dimension tables optimized for r
 
 **Fact tables**
 
-* `fact\_sales`
-* `fact\_daily\_target`
-* `fact\_prospective\_order`
+* `fact\\\_sales`
+* `fact\\\_daily\\\_targets`
+* `fact\\\_prospective\\\_orders`
 
 **Dimension tables**
 
-* `dim\_employee`
-* `dim\_customer`
-* `dim\_product`
-* `dim\_territory`
-* `dim\_date`
+* `dim\\\_employee`
+* `dim\\\_customer`
+* `dim\\\_product`
+* `dim\\\_territory`
+* `dim\\\_date`
 
 ## Dynamic row-level security
 
@@ -152,6 +152,4 @@ The final app covers:
 ## Author
 
 **Kingsley Chukwuma**
-
-
 
