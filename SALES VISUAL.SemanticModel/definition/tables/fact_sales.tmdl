@@ -1,0 +1,128 @@
+table fact_sales
+	lineageTag: b4d91018-ee5e-4d9c-aef0-f6abc1d5b031
+
+	column invoice_line_id
+		dataType: int64
+		formatString: 0
+		lineageTag: c72d8dc1-7cf8-4829-b2c7-00c68729844e
+		summarizeBy: sum
+		sourceColumn: invoice_line_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoice_id
+		dataType: int64
+		formatString: 0
+		lineageTag: a558cab7-df7e-431a-a185-d5f3ddf61f23
+		summarizeBy: sum
+		sourceColumn: invoice_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c4e12cd-3f80-4b79-9030-8b28258d5c4e
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 2ff62f58-72cd-4506-897b-951177462eb0
+		summarizeBy: none
+		sourceColumn: customer_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 55459aed-4d3e-4ee8-9590-043863f45840
+		summarizeBy: none
+		sourceColumn: product_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 3a527466-d0fb-42ee-b469-fa6f6b8a2461
+		summarizeBy: none
+		sourceColumn: employee_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column territory_key
+		dataType: int64
+		formatString: 0
+		lineageTag: ff218a5d-bb83-4833-a5aa-c52c42120a4e
+		summarizeBy: none
+		sourceColumn: territory_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: dc280293-44c0-47a5-a6f5-0a1fd8fb85c0
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_price_pln
+		dataType: double
+		lineageTag: 2b7869b7-4e55-40e2-ba6d-560e7c091aa8
+		summarizeBy: sum
+		sourceColumn: unit_price_pln
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gross_amount_pln
+		dataType: double
+		lineageTag: cecdf3dc-bd08-4226-bbbd-80664b275f11
+		summarizeBy: sum
+		sourceColumn: gross_amount_pln
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column discount_amount_pln
+		dataType: double
+		lineageTag: 9e50786a-af40-4d69-817e-a22ae2295cbb
+		summarizeBy: sum
+		sourceColumn: discount_amount_pln
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column net_amount_pln
+		dataType: double
+		lineageTag: 7edc6db4-3611-41e3-b254-f378c6e428be
+		summarizeBy: sum
+		sourceColumn: net_amount_pln
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_sales = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("oisvvomosz3elmz2vuqfv426li-r63vsebvac3eveb6no72kwmy5a.datawarehouse.fabric.microsoft.com", "lh_oralcare_analytics"),
+				    dbo_fact_sales = Source{[Schema="dbo",Item="fact_sales"]}[Data]
+				in
+				    dbo_fact_sales
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

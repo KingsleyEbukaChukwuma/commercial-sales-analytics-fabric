@@ -1,0 +1,214 @@
+table _measures
+	lineageTag: 1187069e-a8c5-4fca-814a-8f61bff95f35
+
+	measure 'Net Sales' = SUM(fact_sales[net_amount_pln])
+		lineageTag: 0bd26b5f-4e47-440d-87ff-721ac0503359
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Target Sales' = SUM(fact_daily_sales_targets[daily_target_pln])
+		lineageTag: a4e2b5e7-8a19-4746-a106-f83deba71d04
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Achievement %' = DIVIDE([Net Sales], [Target Sales])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: bc139ef6-408a-44ee-91d7-e8df07324dae
+
+	measure 'Gap to Target' = [Net Sales] - [Target Sales]
+		lineageTag: a54745bc-4d99-4a0b-bd4c-4e22defa3b6d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Pipeline Value' =
+			
+			CALCULATE(
+			    SUM(fact_prospective_orders[expected_amount_pln]),
+			    USERELATIONSHIP(
+			        dim_date[date_key],
+			        fact_prospective_orders[expected_close_date_key]
+			    )
+			)
+		lineageTag: 205297ca-3cef-4955-aa01-24ee9718624e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Weighted Pipeline' = SUMX(fact_prospective_orders, fact_prospective_orders[expected_amount_pln] * fact_prospective_orders[probability])
+		lineageTag: 549c9151-c865-4118-ba9d-93fe8227d920
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Active Customers' = DISTINCTCOUNT(fact_sales[customer_key])
+		formatString: 0
+		lineageTag: d145cf89-0353-4e32-a9c5-138784b71c1a
+
+	measure 'Annual Weighted Pipeline' =
+			
+			CALCULATE(
+			    SUMX(
+			        fact_prospective_orders,
+			        fact_prospective_orders[expected_amount_pln]
+			            * fact_prospective_orders[probability]
+			    ),
+			    USERELATIONSHIP(
+			        dim_date[date_key],
+			        fact_prospective_orders[expected_close_date_key]
+			    )
+			)
+		lineageTag: 7dd32a25-68ea-4067-8b56-491bb5f32a73
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Net Sales 3M Rolling Average' =
+			
+			AVERAGEX(
+			    DATESINPERIOD(
+			        dim_date[full_date],
+			        MAX(dim_date[full_date]),
+			        -3,
+			        MONTH
+			    ),
+			    [Net Sales]
+			)
+		lineageTag: 08ea2e8f-23e7-4fab-a5fc-67de48cae779
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Customer Sales Contribution %' =
+			
+			DIVIDE(
+			    [Net Sales],
+			    CALCULATE(
+			        [Net Sales],
+			        REMOVEFILTERS(dim_customer)
+			    )
+			)
+		formatString: #,0.00%;-#,0.00%;#,0.00%
+		lineageTag: 7e8aa368-7b67-4109-a305-3f5d1e7501b9
+
+	measure 'Achievement Status' =
+			
+			SWITCH(
+			    TRUE(),
+			    [Achievement %] >= 1, "On Target",
+			    [Achievement %] >= 0.8, "Watch",
+			    "High Risk"
+			)
+		lineageTag: b45a8866-b659-45e2-839e-f7fb61ba9862
+
+	measure 'Remaining to Target' =
+			
+			[Target Sales] - [Net Sales]
+		lineageTag: 9a225e85-8f15-441e-a29f-6f8f0bdafc9a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Pipeline Coverage' =
+			
+			DIVIDE(
+			    [Weighted Pipeline],
+			    [Remaining to Target]
+			)
+		lineageTag: dd30df6e-5bff-42cf-a658-19d6e85286e4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Risk Level' =
+			
+			SWITCH(
+			    TRUE(),
+			    [Achievement %] < 0.8 && [Weighted Pipeline] < [Remaining to Target], "High Risk",
+			    [Achievement %] < 1, "Medium Risk",
+			    "Low Risk"
+			)
+		lineageTag: 86de1232-5378-435b-bfef-d74ec0f063c9
+
+	measure 'No of Products' = DISTINCTCOUNT(dim_product[product_id])
+		formatString: 0
+		lineageTag: 6925bd66-626b-46bd-bac8-8f1669a61adb
+
+	measure 'Count Brand' = DISTINCTCOUNT(dim_product[brand])
+		formatString: 0
+		lineageTag: 65080c42-7e14-4df6-b793-73c53f36da5d
+
+	measure 'Count Category' = DISTINCTCOUNT(dim_product[category])
+		formatString: 0
+		lineageTag: ba6dd35a-617a-43be-a5ea-006ce30d9b9d
+
+	measure 'Net Sales YoY%' =
+			
+			VAR CurrentSales = [Net Sales]
+			VAR PreviousYearSales =
+			    CALCULATE(
+			        [Net Sales],
+			        DATEADD('dim_date'[full_date], -1, YEAR)
+			    )
+			RETURN
+			    IF(
+			        ISBLANK(CurrentSales)
+			            || ISBLANK(PreviousYearSales)
+			            || PreviousYearSales = 0,
+			        BLANK(),
+			        DIVIDE(
+			            CurrentSales - PreviousYearSales,
+			            PreviousYearSales
+			        )
+			    )
+		formatString: #,0.00%;-#,0.00%;#,0.00%
+		lineageTag: fac66b3b-d7ed-4b4a-90ce-a312f4874fbb
+
+		extendedProperty MeasureTemplate =
+				{
+				  "version": 0,
+				  "daxTemplateName": "YearOverYear"
+				}
+
+	measure 'Current User' =
+			
+			VAR CurrentEmail =
+			    LOWER(TRIM(USERPRINCIPALNAME()))
+			
+			VAR FullName =
+			    LOOKUPVALUE(
+			        dim_employee[employee_name],
+			        dim_employee[email], CurrentEmail
+			    )
+			
+			VAR CleanName =
+			    TRIM(FullName)
+			
+			VAR FirstInitial =
+			    LEFT(CleanName, 1)
+			
+			VAR LastName =
+			    PATHITEMREVERSE(
+			        SUBSTITUTE(CleanName, " ", "|"),
+			        1,
+			        TEXT
+			    )
+			
+			RETURN
+			    IF(
+			        ISBLANK(FullName),
+			        "USERNAME",
+			        UPPER(FirstInitial & ". " & LastName)
+			    )
+		lineageTag: b7227e34-73fb-4b73-b1fe-3be6e2470276
+
+	column Column
+		formatString: 0
+		lineageTag: 7fa8bee7-7464-46ab-a5a0-0e5ac5427b16
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = c9d093d2d1114a4188a66e8fc76096cd
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

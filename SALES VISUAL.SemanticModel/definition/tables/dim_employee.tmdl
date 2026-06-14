@@ -1,0 +1,163 @@
+table dim_employee
+	lineageTag: 7973aeda-3289-4f90-9ab5-2684496840dc
+
+	column employee_id
+		dataType: string
+		lineageTag: 9189a823-0385-40f0-8724-bd28d60447c6
+		summarizeBy: none
+		sourceColumn: employee_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 629eb768-b125-4197-971b-80f2f23733bb
+		summarizeBy: none
+		sourceColumn: employee_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_name
+		dataType: string
+		lineageTag: 0d386cc0-e898-4ed5-8d47-d12e19020afc
+		summarizeBy: none
+		sourceColumn: employee_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column role
+		dataType: string
+		lineageTag: 1de6b5f0-ebeb-4e46-80cd-6840efaf6547
+		summarizeBy: none
+		sourceColumn: role
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: 96db6711-200f-4825-9cfe-00525b8df013
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column manager_employee_key
+		dataType: int64
+		formatString: 0
+		lineageTag: c1ae8d26-6143-4250-97c9-4d58c2e14247
+		summarizeBy: sum
+		sourceColumn: manager_employee_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column territory_key
+		dataType: int64
+		formatString: 0
+		lineageTag: fa22ab00-c1ce-4c55-b70c-59ae6fd1e4f8
+		summarizeBy: sum
+		sourceColumn: territory_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column manager_employee_name
+		dataType: string
+		lineageTag: 563b2612-d6bb-482e-9e87-aff2b5d05799
+		summarizeBy: none
+		sourceColumn: manager_employee_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column commercial_manager_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 6f2a08d2-3c8a-4271-8f47-8edd72b8b51f
+		summarizeBy: sum
+		sourceColumn: commercial_manager_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column commercial_manager_name
+		dataType: string
+		lineageTag: 249ae9ce-8e8a-4bdf-931a-5f2fe006392a
+		summarizeBy: none
+		sourceColumn: commercial_manager_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column regional_manager_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 8cd3c249-d653-4744-8368-23f3366da2d4
+		summarizeBy: sum
+		sourceColumn: regional_manager_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column regional_manager_name
+		dataType: string
+		lineageTag: 2c7d00e3-9e95-427d-a730-466d78fcd1eb
+		summarizeBy: none
+		sourceColumn: regional_manager_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column sales_rep_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 9a541243-8c2b-4024-9e53-cf52f11f7968
+		summarizeBy: sum
+		sourceColumn: sales_rep_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column sales_rep_name
+		dataType: string
+		lineageTag: a8c6b7ff-6090-47c5-a5bd-b79eacf275ef
+		summarizeBy: none
+		sourceColumn: sales_rep_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column business_region
+		dataType: string
+		lineageTag: 88ea08f8-c059-4e2b-88d3-8c8b0dadbe1e
+		summarizeBy: none
+		sourceColumn: business_region
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_status
+		dataType: string
+		lineageTag: 2c7f81f8-ae98-48ea-87bb-6eb99dc7e169
+		summarizeBy: none
+		sourceColumn: employee_status
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy employee_hierarchy
+		lineageTag: 95549833-295a-4446-9573-718d9d4fceed
+
+		level commercial_manager_name
+			lineageTag: ca5401c7-390d-42c0-a2be-b30b456a51d3
+			column: commercial_manager_name
+
+		level regional_manager_name
+			lineageTag: 5b21561c-b8f4-4401-83e8-1fe49fcdf93b
+			column: regional_manager_name
+
+		level sales_rep_name
+			lineageTag: 73c7d60c-e441-45f3-9cbc-491e786331ba
+			column: sales_rep_name
+
+	partition dim_employee = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("oisvvomosz3elmz2vuqfv426li-r63vsebvac3eveb6no72kwmy5a.datawarehouse.fabric.microsoft.com", "lh_oralcare_analytics"),
+				    dbo_dim_employee = Source{[Schema="dbo",Item="dim_employee"]}[Data]
+				in
+				    dbo_dim_employee
+
+	annotation PBI_ResultType = Table
+

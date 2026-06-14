@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "SALES VISUAL"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "0d79a809-a2ed-8b32-4b92-ab5f52d9fa56"
+  }
+}

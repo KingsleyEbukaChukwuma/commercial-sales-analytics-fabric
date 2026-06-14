@@ -1,0 +1,29 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["dim_customer","dim_date","dim_employee","dim_product","dim_territory","fact_sales","fact_prospective_orders","fact_daily_sales_targets","self_access","commercial_manager_access","regional_manager_access","bridge_employee_access"]
+
+ref table dim_customer
+ref table dim_date
+ref table dim_employee
+ref table dim_product
+ref table dim_territory
+ref table fact_sales
+ref table fact_prospective_orders
+ref table fact_daily_sales_targets
+ref table DateTableTemplate_2ce75d2b-bbae-4302-b0e7-e021e5d8045a
+ref table LocalDateTable_c0aea8ea-3ced-4858-9411-96860c6e5488
+ref table _measures
+ref table bridge_employee_access
+
+ref role Untitled
+
+ref cultureInfo en-US
+
